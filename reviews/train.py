@@ -57,6 +57,6 @@ def train_configurations():
     return pd.DataFrame(scores)
 
 scores = train_configurations()
-fname = 'scores.tsv'
+`fname = 'data/scores.tsv'
 scores.to_csv(fname, sep='\t')
 logging.info(f'Scores saved to {fname}')

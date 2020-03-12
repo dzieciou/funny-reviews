@@ -10,7 +10,8 @@ from reviews.yelp import read_reviews
 import reviews.logconf
 
 
-def get_reviews(limit=10):
+def get_reviews(limit=None
+):
     reviews = chain(
         islice(read_reviews('data/groundtruth-humorous-train.jl'), limit),
         islice(read_reviews('data/groundtruth-nonhumorous-train.jl'), limit),
