@@ -15,6 +15,7 @@ dependencies:
   - jsonlines
   - tqdm
   - numpy
+  - pandas
   - scikit-learn
   - pip:
       - cmudict

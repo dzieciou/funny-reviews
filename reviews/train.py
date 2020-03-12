@@ -4,21 +4,18 @@ from sklearn.linear_model import Perceptron
 from sklearn.model_selection import cross_validate
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.utils import shuffle
-import pathlib
+import pandas as pd
 
 from reviews.prepare_data import configurations
 import reviews.logconf
 import logging
 
 
-# TODO What about saving X and y
-
 def score(clf, X, y):
     scores = cross_validate(clf, X, y, cv=5, scoring=['accuracy'])
-    logging.info("Accuracy of %s: %0.2f (+/- %0.2f)"
-                 % (clf.__class__.__name__,
-                    scores['test_accuracy'].mean(),
-                    scores['test_accuracy'].std() * 2))
+    avg_accuracy = scores['test_accuracy'].mean()
+    var_accuracy = scores['test_accuracy'].std() * 2
+    return avg_accuracy, var_accuracy
 
 
 def train(data_dir):
@@ -40,10 +37,26 @@ def train(data_dir):
     clf3 = AdaBoostClassifier(n_estimators=100, random_state=0)
 
     for clf in [clf1, clf2, clf3]:
-        score(clf, X, y)
+        avg_accuracy, var_accuracy = score(clf, X, y)
+        clf_name = clf.__class__.__name__
+        yield {'data_dir': data_dir,
+               'clf_name': clf_name,
+               'accuracy': avg_accuracy,
+               'variance': var_accuracy}
+        logging.info("Accuracy of %s: %0.2f (+/- %0.2f)"
+                     % (clf.__class__.__name__,
+                        avg_accuracy,
+                        var_accuracy))
 
+def train_configurations():
+    scores = []
+    for extractors in configurations:
+        name = '-'.join(extractors)
+        data_dir = f'data/prepared/{name}'
+        scores.extend(list(train(data_dir)))
+    return pd.DataFrame(scores)
 
-for extractors in configurations:
-    name = '-'.join(extractors)
-    data_dir = f'data/prepared/{name}'
-    train(data_dir)
+scores = train_configurations()
+fname = 'scores.tsv'
+scores.to_csv(fname, sep='\t')
+logging.info(f'Scores saved to {fname}')
