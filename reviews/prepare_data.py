@@ -9,6 +9,7 @@ from reviews.features import Vectorizer
 from reviews.yelp import read_reviews
 import reviews.logconf
 
+
 def get_reviews(limit=10):
     reviews = chain(
         islice(read_reviews('data/groundtruth-humorous-train.jl'), limit),

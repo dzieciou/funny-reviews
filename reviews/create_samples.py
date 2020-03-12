@@ -2,7 +2,6 @@ import jsonlines
 from sklearn.utils.random import sample_without_replacement
 from tqdm import tqdm
 
-
 # TODO Add logging of original stastistics, final output statistics in form of TSV file
 # TODO Add logging of line counting
 from reviews.yelp import read_reviews
@@ -33,9 +32,6 @@ def count_lines(fpath):
 
 
 count_reviews = count_lines
-
-
-
 
 
 def sample_multiple(n_population, *n_samples_list):
