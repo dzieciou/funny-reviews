@@ -6,7 +6,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.utils import shuffle
 import pandas as pd
 
-from reviews.prepare_data import configurations
+from reviews.vectorize import configurations
 import reviews.logconf
 import logging
 
@@ -57,6 +57,6 @@ def train_configurations():
     return pd.DataFrame(scores)
 
 scores = train_configurations()
-`fname = 'data/scores.tsv'
+fname = 'data/scores.tsv'
 scores.to_csv(fname, sep='\t')
 logging.info(f'Scores saved to {fname}')
