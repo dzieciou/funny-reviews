@@ -3,12 +3,14 @@ from itertools import chain, islice
 from tqdm import tqdm
 
 import jsonlines
+
+from reviews.wikifiers.brank import BrankWikifier
 from reviews.yelp import read_reviews
 
 nlp = spacy.load("en_core_web_sm")
 
 
-def get_reviews(limit=None):
+def get_reviews(limit=10):
     reviews = chain(
         islice(read_reviews('data/groundtruth-humorous-train.jl'), limit),
         islice(read_reviews('data/groundtruth-nonhumorous-train.jl'), limit),
@@ -17,21 +19,21 @@ def get_reviews(limit=None):
     return tqdm(reviews, desc='Reading reviews...')
 
 
+wikifier = BrankWikifier('vanfmxwemngacoystnhmrlcblktwvs')
+
+
 def wikify(review):
-    doc = nlp(review['text'])
-    return [
-        {
-            'entity': e.text,
-            'label': e.label_,
-            'kb_id_': e.kb_id_
+    for e in wikifier.wikify(review['text']):
+        yield {
+            'entity': e.phrase,
+            'kb_id': e.kb_id,
+            'kb_url': e.kb_url
         }
-        for e in doc.ents
-    ]
 
 
-with jsonlines.open('data/wikified.jl', 'w') as out:
+with jsonlines.open('data/wikified.jl', 'w', flush=True) as out:
     for review in get_reviews():
         out.write({
             'review_id': review['review_id'],
-            'entities': wikify(review)
+            'entities': list(wikify(review))
         })

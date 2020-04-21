@@ -17,6 +17,7 @@ dependencies:
   - numpy
   - pandas
   - scikit-learn
+  - scrapy
   - pip:
       - cmudict
 
