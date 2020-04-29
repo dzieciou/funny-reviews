@@ -25,11 +25,12 @@ def length(doc):
 
 def letters_to_others(doc):
     letters = [ch for ch in doc.text if ch.isupper() or ch.islower()]
-    return len(letters) / length(doc)
+    return len(letters) / (length(doc)-len(letters))
 
 
 def average_word_length(doc):
-    return mean([len(token.text) for token in doc if _is_word(token)])
+    words_lengths = [len(token.text) for token in doc if _is_word(token)]
+    return 0 if not words_lengths else mean(words_lengths)
 
 
 def alliteration(doc):
@@ -120,6 +121,10 @@ class Vectorizer:
             for id_ in corpus_features:
                 features[id_].extend(corpus_features[id_])
 
+
         X = [v for k, v in sorted(features.items())]
         y = [v for k, v in sorted(labels.items())]
         return np.array(X), np.array(y)
+
+
+

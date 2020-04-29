@@ -10,13 +10,13 @@ from reviews.yelp import read_reviews
 import reviews.logconf
 
 
-def get_reviews(limit=None
+def get_reviews(limit=100
 ):
     reviews = chain(
-        islice(read_reviews('data/groundtruth-humorous-train.jl'), limit),
-        islice(read_reviews('data/groundtruth-nonhumorous-train.jl'), limit),
-        islice(read_reviews('data/groundtruth-humorous-dev.jl'), limit),
-        islice(read_reviews('data/groundtruth-nonhumorous-dev.jl'), limit))
+        islice(read_reviews('data/samples/groundtruth-humorous-train.jl'), limit),
+        islice(read_reviews('data/samples/groundtruth-nonhumorous-train.jl'), limit),
+        islice(read_reviews('data/samples/groundtruth-humorous-dev.jl'), limit),
+        islice(read_reviews('data/samples/groundtruth-nonhumorous-dev.jl'), limit))
     return tqdm(reviews, desc='Reading reviews...')
 
 
@@ -39,18 +39,19 @@ configurations = (
     ('C4',),
     ('E1',),
     ('E2',),
-    ('A1',),
-    ('A2',),
-    ('D2',),
-    ('U2',),
-    ('A1', 'U2',),
-    ('A2', 'D2',),
-    ('D2', 'U2',),
-    ('A2', 'D2', 'U2',),
-    ('D2', 'U2', 'C1',),
-    ('A2', 'D2', 'C1',),
-    ('A1', 'D2', 'U2', 'C1',),
-    ('A2', 'D2', 'U2', 'C1',),
+  # Once we have generative models working those features can be implemented and used
+  # ('A1',),
+  # ('A2',),
+  # ('D2',),
+  # ('U2',),DONE
+  # ('A1', 'U2',),
+  # ('A2', 'D2',),
+  # ('D2', 'U2',),
+  # ('A2', 'D2', 'U2',),
+  # ('D2', 'U2', 'C1',),
+  # ('A2', 'D2', 'C1',),
+  # ('A1', 'D2', 'U2', 'C1',),
+  # ('A2', 'D2', 'U2', 'C1',),
 )
 
 if __name__ == '__main__':

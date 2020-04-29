@@ -33,6 +33,6 @@ def test_alliteration():
 
 
 def test_letters_to_others():
-    assert letters_to_others(nlp('12345')) == 0
-    assert letters_to_others(nlp('A b ')) == 0.5
+    assert letters_to_others(nlp('12345')) == 0.0
+    assert letters_to_others(nlp('A b ')) == 1.0
 

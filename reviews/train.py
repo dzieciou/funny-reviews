@@ -43,7 +43,7 @@ def train(data_dir):
                'clf_name': clf_name,
                'accuracy': avg_accuracy,
                'variance': var_accuracy}
-        logging.info("Accuracy of %s: %0.2f (+/- %0.2f)"
+        logging.info("Accuracy of %s: %0.4f (+/- %0.2f)"
                      % (clf.__class__.__name__,
                         avg_accuracy,
                         var_accuracy))

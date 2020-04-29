@@ -57,8 +57,8 @@ def sample_reviews(fpath, n_samples_list, fnames):
                     output.write(review)
 
 
-SIZE = 12000
-DEV_SIZE = 5000
+SIZE = 12000*5
+DEV_SIZE = 5000*5
 
 sample_reviews('data/groundtruth-humorous.jl',
                [SIZE, DEV_SIZE],

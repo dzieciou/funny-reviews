@@ -64,7 +64,7 @@ def normalize(word):
 def find_alliterations(doc, max_length=3):
     for sent in doc.sents:
         words = [normalize(token.text) for token in sent]
-        for length in range(2, max_length):
+        for length in range(2, max_length+1):
             alliterations = (c for c in combinations(words, length) if
                              is_alliteration(c))
             yield from alliterations
@@ -73,6 +73,6 @@ def find_alliterations(doc, max_length=3):
 def find_rhymes(doc, max_length=3):
     for sent in doc.sents:
         words = [normalize(token.text) for token in sent]
-        for length in range(2, max_length):
+        for length in range(2, max_length+1):
             rhymes = (c for c in combinations(words, length) if is_rhyme(c))
             yield from rhymes
