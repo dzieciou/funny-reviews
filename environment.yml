@@ -1,0 +1,23 @@
+# run: conda env create --file environment.yml
+
+name: funny-reviews
+channels:
+  - conda-forge
+dependencies:
+  - python=3.7
+  - jupyterlab
+  - pip
+  - nltk
+  - spacy
+  - spacy-lookups-data
+  - spacy-model-en_core_web_sm
+  - pytest
+  - jsonlines
+  - tqdm
+  - numpy
+  - pandas
+  - scikit-learn
+  - scrapy
+  - pip:
+      - cmudict
+
